@@ -12,9 +12,9 @@ body {
 	margin-right: auto;
 	background-color: white;
 	border-radius: 2px;
-}	
+}
 
-#slideShow {	
+#slideShow {
 	position: relative;
 }
 
@@ -62,6 +62,7 @@ body {
 .details p {
 	margin-top: 20px;
 }
+
 .details {
 	border: 1px #000 dashed;
 	padding: 0px 10px;
