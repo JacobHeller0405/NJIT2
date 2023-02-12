@@ -1,15 +1,15 @@
 // requestAnim shim layer by Paul Irish
-    window.requestAnimFrame = (function(){
-      return  window.requestAnimationFrame       || 
-              window.webkitRequestAnimationFrame || 
-              window.mozRequestAnimationFrame    || 
-              window.oRequestAnimationFrame      || 
-              window.msRequestAnimationFrame     || 
-              function(/* function */ callback, /* DOMElement */ element){
-                window.setTimeout(callback, 1000 / 60);
-              };
-    })();
-  
+window.requestAnimFrame = (function () {
+	return window.requestAnimationFrame ||
+		window.webkitRequestAnimationFrame ||
+		window.mozRequestAnimationFrame ||
+		window.oRequestAnimationFrame ||
+		window.msRequestAnimationFrame ||
+		function (/* function */ callback, /* DOMElement */ element) {
+			window.setTimeout(callback, 1000 / 60);
+		};
+})();
+
 
 // example code from mr doob : http://mrdoob.com/lab/javascript/requestanimationframe/
 
@@ -18,14 +18,14 @@ animate();
 var mLastFrameTime = 0;
 var mWaitTime = 5000; //time in ms
 function animate() {
-    requestAnimFrame( animate );
+	requestAnimFrame(animate);
 	var currentTime = new Date().getTime();
 	if (mLastFrameTime === 0) {
 		mLastFrameTime = currentTime;
 	}
 
 	if ((currentTime - mLastFrameTime) > mWaitTime) {
-		swapPhoto();
+
 		mLastFrameTime = currentTime;
 	}
 }
@@ -34,7 +34,6 @@ function animate() {
 
 function swapPhoto() {
 	//Add code here to access the #slideShow element.
-
 	if (mCurrentIndex >= mImages.length) {
 		mCurrentIndex = 0;
 	}
@@ -44,46 +43,77 @@ function swapPhoto() {
 	//Access the img element and replace its source
 	//with a new image from your images array which is loaded 
 	//from the JSON string
-	console.log('swap photo');
 
 	document.getElementById('photo').src = mImages[mCurrentIndex].img;
-	var location = document.getElementsByClassName("location");
-	location[0].innerHTML = 
+	var loc = document.getElementsByClassName("location");
 	loc[0].innerHTML = 'Location: ' + mImages[mCurrentIndex].location;
 
-	var description = document.getElementsByClassName("description");
-	des[0].innerHTML = "Description: " + mImages[mCurrentIndex].location;
+	var des = document.getElementsByClassName("description");
+	des[0].innerHTML = "Description: " + mImages[mCurrentIndex].description;
 
-	var data = document.getElementsByClassName("date");
-	dt[0].innerHTML = "Date: " + mImages[mCurrentIndex].location;
+	var dt = document.getElementsByClassName("date");
+	dt[0].innerHTML = "Date: " + mImages[mCurrentIndex].date;
 
   	mLastFrameTime = 0;
 	mCurrentIndex++;
 }
+function swapBack() {
+	//Add code here to access the #slideShow element.
+	if (mCurrentIndex >= mImages.length) {
+		mCurrentIndex = 0;
+	}
+	if (mCurrentIndex < 0) {
+   	 	mCurrentIndex = mImages.length-1;
+  }
+	//Access the img element and replace its source
+	//with a new image from your images array which is loaded 
+	//from the JSON string
+
+	document.getElementById('photo').src = mImages[mCurrentIndex].img;
+	var loc = document.getElementsByClassName("location");
+	loc[0].innerHTML = 'Location: ' + mImages[mCurrentIndex].location;
+
+	var des = document.getElementsByClassName("description");
+	des[0].innerHTML = "Description: " + mImages[mCurrentIndex].description;
+
+	var dt = document.getElementsByClassName("date");
+	dt[0].innerHTML = "Date: " + mImages[mCurrentIndex].date;
+
+  	mLastFrameTime = 0;
+	mCurrentIndex--;
+}
 
 // Counter for the mImages array
 var mCurrentIndex = 0;
+
 // XMLHttpRequest variable
 var mRequest = new XMLHttpRequest();
+
 // Array holding GalleryImage objects (see below).
 var mImages = [];
+
 // Holds the retrived JSON information
 var mJson;
+
 // URL for the JSON to load by default
 // Some options for you are: images.json, images.short.json; you will need to create your own extra.json later
-var mUrl = images.json;
+var mUrl = "https://api.npoint.io/c297a7b9ee0666a7e90c";
+
+
 //constructor for pulling JSON File
 function WhosJason() {
 	mRequest.onreadystatechange = function () {
-		console.log(object);
+		
 		if (this.readyState == 4 && this.status == 200) {
-
+			
 			mJson = JSON.parse(mRequest.responseText);
-			iterateJSON(mJSON);
+			iterateJSON(mJson);
 		}
 	}
 	mRequest.open("GET", mUrl, true)
 	mRequest.send();
+
+	iterateJSON(mJson);
 }
 
 
@@ -108,17 +138,22 @@ function makeGalleryImageOnloadCallback(galleryImage) {
 		mImages.push(galleryImage);
 	}
 }
+
 $(document).ready(function () {
 
 	// This initially hides the photos' metadata information
-	$('.details').eq(0).hide();
-	WhosJason()
+	//$('.details').eq(0).hide();
+	WhosJason();
+	
 
 });
 
 window.addEventListener('load', function () {
+
 	console.log('window loaded');
+
 }, false);
+
 //Assigning data from JSON list to variables that will be used in our slideshow 
 function GalleryImage() {
 	//implement me as an object to hold the following data about an image:
@@ -131,3 +166,13 @@ function GalleryImage() {
 	var date;
 	var img;
 }
+
+function showDetails() {
+	if($('.moreIndicator').hasClass("rot90")){
+		$('.moreIndicator').removeClass("rot90").addClass("rot270");
+	} else {
+		$('.moreIndicator').removeClass("rot270").addClass("rot90");
+	}
+	$('.details').eq(0).slideToggle();
+}
+
