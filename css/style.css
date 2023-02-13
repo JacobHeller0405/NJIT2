@@ -1,7 +1,9 @@
 body {
 	overflow: auto;
 	font-family: 'Century Gothic', sans-serif;
-	background-image: url(../img/geometry.jpg);
+	background-image: url("https://static.wikia.nocookie.net/5f34ab54-72c8-4133-a986-4490eaeaf411");
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 #photoBooth {
@@ -10,7 +12,7 @@ body {
 	width: 650px;
 	margin-left: auto;
 	margin-right: auto;
-	background-color: white;
+	background-color: #03befc;
 	border-radius: 2px;
 }	
 
@@ -90,6 +92,7 @@ img.moreIndicator.rot90 {
 	border: 1px #000 dashed;
 	padding: 0px 10px;
 	margin: 20px 0px;
+	font-weight: bold;
 }
 
 /*Add CSS styles to rotate the element 90deg
@@ -117,4 +120,12 @@ Make it animate nicely. You'll need CSS3 for this*/
 	padding-left: 45%;
 	position: absolute;
 	bottom: 55px;
+}
+
+.heading {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
